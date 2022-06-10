@@ -1,9 +1,11 @@
+<?php 
+
 session_start();
 
 $servername = "localhost";
 $username = "root";
 $password = "";
-$db_name = "login_acesso";
+$db_name = "gerpet";
 
 $connect = mysqli_connect($servername, $username, $password, $db_name);
 
@@ -17,6 +19,12 @@ if(isset($_POST['btn-entrar'])){
     else {
         $sql = "SELECT login FROM usuarios WHERE login = '$login';";
         $resultado = mysqli_query($connect, $sql);
+        echo $sql;
+        echo mysqli_error($result);
+
+        if(!result){
+            echo "falhou";
+        }
 
         if(mysqli_num_rows($resultado) > 0){
             $senha = md5($senha);
@@ -39,3 +47,5 @@ if(isset($_POST['btn-entrar'])){
 if(mysqli_connect_error() == true){
     echo "Falha na conexão" . mysqli_connect_error();
 }
+
+?>
