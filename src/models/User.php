@@ -36,6 +36,10 @@ class User {
     $this->password = $password;
   }
 
+  public function setPermission($permission) {
+    $this->permission = $permission;
+  }
+
   public function setUdatedAt($udatedAt) {
     $this->udatedAt = $udatedAt;
   }
