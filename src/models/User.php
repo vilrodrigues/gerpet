@@ -28,10 +28,6 @@ class User {
     $this->login = $login;
   }
 
-  public function setPermission($permission) {
-    $this->permission = $permission;
-  }
-
   public function setPassword($password) {
     $this->password = $password;
   }
