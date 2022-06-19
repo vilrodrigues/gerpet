@@ -3,9 +3,9 @@
   require_once('src/dao/UserDAO.php');
   
   $userDao = new UserDAO();
-  
+
   for ($i = 0; $i < 20; $i++) {
-    $user = new User('user ' .$i, 'no password', 3);
+    $user = new User('peter', 'user ' . $i, 'no password', 3);
     $userDao->adicionar($user);
   }
   

@@ -1,18 +1,18 @@
 <?php
 
 require_once('src/models/User.php');
-require_once('/var/www/html/src/dao/GenericDAO.php');
+require_once('GenericDAO.php');
 
 class UserDAO extends GenericDAO {
 
   public function adicionar($user) {
-    $sql = 'INSERT INTO user (name, password, permission) VALUES(?,?,?)';
-    $this->create($sql, Array($user->getName(), $user->getPassword(), $user->getPermission()));
+    $sql = 'INSERT INTO user (name, login, password, permission) VALUES(?,?,?,?)';
+    $this->create($sql, Array($user->getName(), $user->getLogin(), $user->getPassword(), $user->getPermission()));
   }
 
   public function alterar($user) {
-    $sql = 'UPDATE user SET name=?,password=?, permission=?, updatedAt=now() where id=?';
-    $this->update($sql, Array($user->getName(), $user->getPassword(), $user->getPermission(), $user->getId()));
+    $sql = 'UPDATE user SET name=?, login=? password=?, permission=?, updatedAt=now() where id=?';
+    $this->update($sql, Array($user->getName(), $user->getLogin(), $user->getPassword(), $user->getPermission(), $user->getId()));
   }
 
   public function remover($id) {

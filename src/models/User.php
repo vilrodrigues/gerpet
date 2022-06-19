@@ -25,7 +25,11 @@ class User {
   }
 
   public function setLogin($login) {
-    $this->login = $login; 
+    $this->login = $login;
+  }
+
+  public function setPermission($permission) {
+    $this->permission = $permission;
   }
 
   public function setPassword($password) {
