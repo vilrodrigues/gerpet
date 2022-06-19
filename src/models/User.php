@@ -3,13 +3,15 @@
 class User {
   private $id;
   private $name;
+  private $login;
   private $password;
   private $permission;
   private $createdAt;
   private $updatedAt;
 
-  function __construct($name, $password, $permission) {
+  function __construct($name, $login, $password, $permission) {
     $this->name = $name;
+    $this->login = $login;
     $this->password = $password;
     $this->permission = $permission;
   }
@@ -22,12 +24,16 @@ class User {
     $this->name = $name; 
   }
 
-  public function setPermission($permission) {
-    $this->permission = $permission;
+  public function setLogin($login) {
+    $this->login = $login; 
   }
 
   public function setPassword($password) {
     $this->password = $password;
+  }
+
+  public function setPermission($permission) {
+    $this->permission = $permission;
   }
 
   public function setUdatedAt($udatedAt) {
@@ -40,6 +46,10 @@ class User {
 
   public function getName() {
     return $this->name;
+  }
+
+  public function getLogin() {
+    return $this->login;
   }
 
   public function getPermission() {
