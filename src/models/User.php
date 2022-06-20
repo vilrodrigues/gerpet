@@ -36,8 +36,12 @@ class User {
     $this->permission = $permission;
   }
 
-  public function setUdatedAt($udatedAt) {
-    $this->udatedAt = $udatedAt;
+  public function setCreatedAt($createdAt) {
+    $this->createdAt = $createdAt;
+  }
+
+  public function setUpdatedAt($updatedAt) {
+    $this->updatedAt = $updatedAt;
   }
 
   public function getId() {
@@ -51,19 +55,20 @@ class User {
   public function getLogin() {
     return $this->login;
   }
+  
+  public function getPassword() {
+    return $this->password;
+  }
 
   public function getPermission() {
     return $this->permission;
   }
 
-  public function getPassword() {
-    return $this->password;
-  }
-
   public function getCreatedAt() {
     return $this->createdAt;
   }
-  public function getUdatedAt() {
+  
+  public function getUpdatedAt() {
     return $this->udatedAt;
   }
 }
