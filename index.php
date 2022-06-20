@@ -1,33 +1,28 @@
 <?php
 
-  require_once('src/dao/UserDAO.php');
-  
-  $userDao = new UserDAO();
+$request = $_SERVER['REQUEST_URI'];
 
-  for ($i = 0; $i < 20; $i++) {
-    $user = new User('peter', 'user ' . $i, 'no password', 3);
-    $userDao->adicionar($user);
-  }
-  
-  $query = $userDao->selecionarPeloNome('%');
-  echo '<h1> Antes </h1>';
+switch ($request) {
 
-  foreach ($query as $arr) {
-    foreach ($arr as $key => $value) 
-      echo $key . ' => ' . $value . '<br>';
-    echo "<hr>";
-  }
+    case '':
+    case '/gerpet/':
+        require __DIR__ . '/src/views/home.php';
+        break;
 
-  foreach ($query as $arr)
-    $userDao->remover($arr['id']);
+    case '/gerpet/home':
+        require __DIR__ . '/src/views/home.php';
+        break;
 
-  $query = $userDao->selecionarPeloNome('%');
-  echo '<h1> Depois </h1>';
-  
-  foreach ($query as $arr) {
-    foreach ($arr as $key => $value) 
-      echo $key . ' => ' . $value . '<br>';
-    echo "<hr>";
-  }
-  
-?>
+    case '/gerpet/users':
+        require __DIR__ . '/src/views/users.php';
+        break;
+
+    case '/gerpet/register':
+        require __DIR__ . '/src/views/register.php';
+        break;
+    
+    default:
+        http_response_code(404);
+        require __DIR__ . '/src/views/not-found.php';
+        break;
+}

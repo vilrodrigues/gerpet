@@ -1,0 +1,1 @@
+<h1>Here goes a list containing all registered users</h1>
