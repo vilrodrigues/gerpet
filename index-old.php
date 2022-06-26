@@ -1,33 +1,18 @@
 <?php
 
+  require_once('src/dao/CategoryDAO.php');
+  require_once('src/dao/ProductDAO.php');
   require_once('src/dao/UserDAO.php');
-  
+
+  $categoryDao = new CategoryDAO();
   $userDao = new UserDAO();
 
-  for ($i = 0; $i < 20; $i++) {
-    $user = new User('peter', 'user ' . $i, 'no password', 3);
-    $userDao->adicionar($user);
-  }
-  
   $query = $userDao->selecionarPeloNome('%');
-  echo '<h1> Antes </h1>';
-
-  foreach ($query as $arr) {
-    foreach ($arr as $key => $value) 
-      echo $key . ' => ' . $value . '<br>';
-    echo "<hr>";
-  }
-
   foreach ($query as $arr)
     $userDao->remover($arr['id']);
 
-  $query = $userDao->selecionarPeloNome('%');
-  echo '<h1> Depois </h1>';
-  
-  foreach ($query as $arr) {
-    foreach ($arr as $key => $value) 
-      echo $key . ' => ' . $value . '<br>';
-    echo "<hr>";
-  }
-  
+  $query = $categoryDao->selecionarPeloNome('%');
+  foreach ($query as $arr)
+    $categoryDao->remover($arr['id']);
+
 ?>

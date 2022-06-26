@@ -1,13 +1,13 @@
 <?php
 
-require_once('src/Connection.php');
+require_once('../Connection.php');
 
 class GenericDAO {
 	private $connection;
 
 	public function create($insertSql, $values) {
 		$this->connection = Connection::newConnection();
-		$stmt = $this->connection->prepare($insetSql);
+		$stmt = $this->connection->prepare($insertSql);
 		$stmt->execute($values);
 		$stmt = null; $this->connection = null;
 	}

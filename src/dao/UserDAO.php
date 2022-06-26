@@ -1,6 +1,6 @@
 <?php
 
-require_once('src/models/User.php');
+require_once('../models/User.php');
 require_once('GenericDAO.php');
 
 class UserDAO extends GenericDAO {
@@ -24,6 +24,17 @@ class UserDAO extends GenericDAO {
     $sql = 'SELECT * FROM user WHERE name like ?';
     $query = $this->read($sql, Array($name));
     return $query;
+  }
+
+  public function login($login, $password) {
+    $sql = 'SELECT * FROM user WHERE login = ? AND password = ?';
+    $query = $this->read($sql, Array($login, $password));
+    if (sizeof($query) == 1) {
+      $user = new User($query[0]['name'], $query[0]['login'], $query[0]['password'], $query[0]['permission']);
+      $user->setId($query[0]['id']);
+      return $user;
+    }
+    return null;
   }
 }
 
