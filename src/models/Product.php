@@ -1,19 +1,19 @@
 <?php
 
-class User {
+class Product {
   private $id;
   private $name;
-  private $login;
-  private $password;
-  private $permission;
+  private $description;
+  private $category;
+  private $price;
   private $createdAt;
   private $updatedAt;
 
-  function __construct($name, $login, $password, $permission) {
+  function __construct($name, $description, $category, $price) {
     $this->name = $name;
-    $this->login = $login;
-    $this->password = $password;
-    $this->permission = $permission;
+    $this->description = $description;
+    $this->category = $category;
+    $this->price = $price;
   }
 
   public function setId($id) {
@@ -24,16 +24,16 @@ class User {
     $this->name = $name; 
   }
 
-  public function setLogin($login) {
-    $this->login = $login;
+  public function setDescription($description) {
+    $this->description = $description;
   }
 
-  public function setPassword($password) {
-    $this->password = $password;
+  public function setCategory($category) {
+    $this->category = $category;
   }
 
-  public function setPermission($permission) {
-    $this->permission = $permission;
+  public function setPrice($price) {
+    $this->price = $price;
   }
 
   public function setCreatedAt($createdAt) {
@@ -52,16 +52,16 @@ class User {
     return $this->name;
   }
 
-  public function getLogin() {
-    return $this->login;
+  public function getDescription() {
+    return $this->description;
   }
   
-  public function getPassword() {
-    return $this->password;
+  public function getCategory() {
+    return $this->category;
   }
 
-  public function getPermission() {
-    return $this->permission;
+  public function getPrice() {
+    return $this->price;
   }
 
   public function getCreatedAt() {
