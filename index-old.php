@@ -2,44 +2,17 @@
 
   require_once('src/dao/CategoryDAO.php');
   require_once('src/dao/ProductDAO.php');
+  require_once('src/dao/UserDAO.php');
 
   $categoryDao = new CategoryDAO();
-  $productDao = new ProductDAO();
+  $userDao = new UserDAO();
 
-  $query = $productDao->selecionarPeloNome('%');
-  echo '<h1> Antes </h1>';
-  foreach ($query as $arr) {
-    foreach ($arr as $key => $value) 
-      echo $key . ' => ' . $value . '<br>';
-    echo "<hr>";
-    $product = new Product($arr['name'], $arr['description'], $arr['category'], $arr['price']);
-    $product->setId($arr['id']);
-    $product->setName('new Product');
-    $product->setPrice(4532);
-    $productDao->alterar($product);
-  }
-
-  $query = $productDao->selecionarPeloNome('%');
-
-  echo '<h1> Depois </h1>';
-  foreach ($query as $arr) {
-    foreach ($arr as $key => $value) 
-      echo $key . ' => ' . $value . '<br>';
-    echo "<hr>";
-  }
-
+  $query = $userDao->selecionarPeloNome('%');
   foreach ($query as $arr)
-    $productDao->remover($arr['id']);
+    $userDao->remover($arr['id']);
 
-    $query = $productDao->selecionarPeloNome('%');
+  $query = $categoryDao->selecionarPeloNome('%');
+  foreach ($query as $arr)
+    $categoryDao->remover($arr['id']);
 
-  echo '<h1> Mais Depois </h1>';
-  foreach ($query as $arr) {
-    foreach ($arr as $key => $value) 
-      echo $key . ' => ' . $value . '<br>';
-    echo "<hr>";
-  }
-  
-
-  
 ?>
