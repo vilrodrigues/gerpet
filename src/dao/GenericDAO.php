@@ -1,6 +1,6 @@
 <?php
 
-require_once('src/Connection.php');
+require_once('../Connection.php');
 
 class GenericDAO {
 	private $connection;
