@@ -26,6 +26,12 @@ class UserDAO extends GenericDAO {
     return $query;
   }
 
+  public function selecionarPeloId($id) {
+    $sql = 'SELECT * FROM user WHERE id = ?';
+    $query = $this->read($sql, Array($id));
+    return $query;
+  }
+
   public function listarTodos() {
     $sql = 'SELECT * FROM user';
     $query = $this->readAll($sql);

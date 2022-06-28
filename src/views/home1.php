@@ -14,7 +14,7 @@
     </style>
 </head>
 <body>
-    <a href='users.php'>Gerenciar Usuários</a>
+    <a href='./users.php'>Gerenciar Usuários</a>
     <a href=''>Gerenciar Produtos</a>
     <a>Gerenciar Clientes</a>
     <a>Gerenciar Animais</a>
