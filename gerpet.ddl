@@ -135,3 +135,10 @@ ALTER TABLE `animal`
 ADD CONSTRAINT `owner` 
 FOREIGN KEY ( `owner` ) 
 REFERENCES `customer` ( `id` ) ;
+
+// Insert users
+
+INSERT INTO `user` (`id`, `name`, `login`, `password`, `permission`, `createdAt`, `updatedAt`) VALUES
+(44, 'Administrador', 'admin', 'admin', 1, '2022-06-27 23:00:12', NULL),
+(46, 'Veterinário', 'veterinario', 'veterinario', 2, '2022-06-27 23:02:31', NULL),
+(47, 'Atendente', 'atendente', 'atendente', 3, '2022-06-27 23:02:10', NULL);
