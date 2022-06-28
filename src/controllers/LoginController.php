@@ -23,6 +23,7 @@
 
   if ($user != null) {
     createUserSession($user);
+    redirect('../views/home.php');
   } else {
     flash('login', 'Senha ou Login incorreto');
     redirect('../views/login.php');
@@ -34,8 +35,9 @@
   $_SESSION['userId'] = $user->getId();
   $_SESSION['userName'] = $user->getName();
   $_SESSION['userLogin'] = $user->getLogin();
-  $_SESSION['userPermisison'] = $user->getPermission();
-  redirect('../../index.php');
+  $_SESSION['userPermission'] = $user->getPermission();
+  //print_r($user);
+  redirect('../views/home.php');
   exit();
 }
 

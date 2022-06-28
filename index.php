@@ -43,15 +43,17 @@ switch ($request) {
 </head>
 <body>
   <h1>Início</h1>
-  <?php
- 
 
-    if (isset($_SESSION)) {
-        echo $_SESSION['name'] . '<br>';
+  <?php
+  
+    session_start();
+
+    if (!empty($_SESSION['userName'])) {
+        echo $_SESSION['userName'] . '<br>';
         echo "<a href='src/views/logout.php'>Sair</a>";
 
     } else {
-        var_dump(isset($_SESSION));
+        //var_dump(isset($_SESSION));
         echo "<a href='src/views/login.php'>Entrar</a>";
     }
   ?>

@@ -26,6 +26,12 @@ class UserDAO extends GenericDAO {
     return $query;
   }
 
+  public function listarTodos() {
+    $sql = 'SELECT * FROM user';
+    $query = $this->readAll($sql);
+    return $query;
+  }
+
   public function login($login, $password) {
     $sql = 'SELECT * FROM user WHERE login = ? AND password = ?';
     $query = $this->read($sql, Array($login, $password));

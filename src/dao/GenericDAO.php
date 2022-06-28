@@ -21,6 +21,15 @@ class GenericDAO {
 		return $arr;
 	}
 
+	public function readAll($selectSql){
+		$this->connection = Connection::newConnection();
+		$stmt = $this->connection->prepare($selectSql);
+		$stmt->execute();
+		$arr = $stmt->fetchAll(PDO::FETCH_ASSOC);
+		$stmt = null; $this->connection = null;
+		return $arr;
+	}
+
 	public function update($updateSql, $values) {
 		$this->connection = Connection::newConnection();
 		$stmt = $this->connection->prepare($updateSql);

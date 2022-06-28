@@ -110,3 +110,28 @@ UNLOCK TABLES;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2022-06-26 14:13:35
+
+// Tabela customer
+
+CREATE TABLE `gerpet`.`customer` 
+( `id` INT NOT NULL AUTO_INCREMENT , 
+`name` VARCHAR(30) NOT NULL , 
+`email` VARCHAR(30) NOT NULL , 
+PRIMARY KEY (`id`)) 
+ENGINE = InnoDB; 
+
+// Tabela animal
+
+CREATE TABLE `gerpet`.`animal` 
+( `id` INT NOT NULL AUTO_INCREMENT , 
+`name` VARCHAR(30) NOT NULL , 
+`nickname` VARCHAR(30) NOT NULL , 
+`owner` INT NOT NULL , 
+PRIMARY KEY (`id`)) 
+FOREIGN KEY (owner) REFERENCES cutomer(id)
+ENGINE = InnoDB; 
+
+ALTER TABLE `animal` 
+ADD CONSTRAINT `owner` 
+FOREIGN KEY ( `owner` ) 
+REFERENCES `customer` ( `id` ) ;
