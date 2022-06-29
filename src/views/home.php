@@ -8,6 +8,7 @@
 </head>
 <body>
     <h1>Painel</h1>
+    <a href="../controllers/UserController.php?q=logout">Sair</a>
 
     <?php
         session_start();
