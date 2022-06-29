@@ -4,7 +4,7 @@
     session_start();
   }
 
-  function flash($name = '', $message = '', $class = 'form-message form-message-red'){
+  function flash($name = '', $message = '', $class = 'alert alert-danger'){
     if(!empty($name)){
       if(!empty($message) && empty($_SESSION[$name])){
         $_SESSION[$name] = $message;
