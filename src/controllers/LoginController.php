@@ -36,8 +36,8 @@
   $_SESSION['userName'] = $user->getName();
   $_SESSION['userLogin'] = $user->getLogin();
   $_SESSION['userPermission'] = $user->getPermission();
-  //print_r($user);
-  redirect('../views/home.php');
+  //redirect('../views/home.php');
+  redirect('../../index.php');
   exit();
 }
 
