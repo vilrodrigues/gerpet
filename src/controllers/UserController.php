@@ -38,7 +38,7 @@ function createUserSession($user)
   $_SESSION['userId'] = $user->getId();
   $_SESSION['userName'] = $user->getName();
   $_SESSION['userLogin'] = $user->getLogin();
-  $_SESSION['userPermission'] = $user->getPermission();
+  $_SESSION['userRole'] = $user->getRole();
   redirect("../../index.php");
   exit();
 }
@@ -85,7 +85,7 @@ function singup()
   }
 
   $userDao = new UserDAO();
-  $user = new User($name, $login, $password, 5);
+  $user = new User($name, $login, $password);
   $userDao->adicionar($user);
 
   createUserSession($user);
@@ -103,7 +103,7 @@ function delete()
 function edit()
 {
   $userDao = new UserDAO();
-  $user = new User($_POST['name'], $_POST['login'], $_POST['password'], $_POST['permission']);
+  $user = new User($_POST['name'], $_POST['login'], $_POST['password']);
   $user->setId($_POST['id']);
   $userDao->alterar($user);
   redirect('../views/users.php');

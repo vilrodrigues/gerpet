@@ -5,15 +5,15 @@ class User {
   private $name;
   private $login;
   private $password;
-  private $permission;
   private $createdAt;
   private $updatedAt;
+  private $role;
 
-  function __construct($name, $login, $password, $permission) {
+  function __construct($name, $login, $password, $role='client') {
     $this->name = $name;
     $this->login = $login;
     $this->password = $password;
-    $this->permission = $permission;
+    $this->role = $role;
   }
 
   public function setId($id) {
@@ -30,10 +30,6 @@ class User {
 
   public function setPassword($password) {
     $this->password = $password;
-  }
-
-  public function setPermission($permission) {
-    $this->permission = $permission;
   }
 
   public function setCreatedAt($createdAt) {
@@ -60,16 +56,16 @@ class User {
     return $this->password;
   }
 
-  public function getPermission() {
-    return $this->permission;
-  }
-
   public function getCreatedAt() {
     return $this->createdAt;
   }
   
   public function getUpdatedAt() {
     return $this->updatedAt;
+  }
+
+  public function getRole() {
+    return $this->role;
   }
 }
 

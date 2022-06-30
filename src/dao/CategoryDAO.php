@@ -1,6 +1,6 @@
 <?php
 
-require_once('src/models/Category.php');
+require_once('../models/Category.php');
 require_once('GenericDAO.php');
 
 class CategoryDAO extends GenericDAO {
@@ -23,6 +23,12 @@ class CategoryDAO extends GenericDAO {
   public function selecionarPeloNome($name) {
     $sql = 'SELECT * FROM category WHERE name like ?';
     $query = $this->read($sql, Array($name));
+    return $query;
+  }
+
+  public function selecionarPeloId($id) {
+    $sql = 'SELECT * FROM category WHERE id = ?';
+    $query = $this->read($sql, Array($id));
     return $query;
   }
 }

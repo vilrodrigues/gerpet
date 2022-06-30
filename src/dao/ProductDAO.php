@@ -1,6 +1,6 @@
 <?php
 
-require_once('src/models/Product.php');
+require_once('../models/Product.php');
 require_once('GenericDAO.php');
 
 class ProductDAO extends GenericDAO {
@@ -23,6 +23,12 @@ class ProductDAO extends GenericDAO {
   public function selecionarPeloNome($name) {
     $sql = 'SELECT * FROM product WHERE name like ?';
     $query = $this->read($sql, Array($name));
+    return $query;
+  }
+
+  public function count($category) {
+    $sql = 'SELECT count(id) FROM product WHERE category = ?';
+    $query = $this->read($sql, Array($category));
     return $query;
   }
 }

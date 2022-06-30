@@ -2,13 +2,10 @@
 session_start();
 if (empty($_SESSION['userName']))
   header('location:login.php');
-if ($_SESSION['userRole'] != 'admin' ) {
-  header('location:../controllers/UserController.php?q=logout');
-}
 
 require_once('../dao/UserDAO.php');
 $userDao = new UserDAO();
-$grupo = $userDao->selecionarPeloNome('%');
+$grupo = $userDao->listarTodos();
 ?>
 
 <!DOCTYPE html>
@@ -34,6 +31,7 @@ $grupo = $userDao->selecionarPeloNome('%');
             <tr>
               <th scope="col">Nome</th>
               <th scope="col">Login</th>
+              <th scope="col">Permission</th>
               <th scope="col">CreatedAt</th>
               <th scope="col">UpdatedAt</th>
             </tr>
@@ -45,26 +43,22 @@ $grupo = $userDao->selecionarPeloNome('%');
               <tr>
                 <th scope="row"><?= $user["name"] ?></th>
                 <td><?= $user["login"] ?></td>
+                <td><?= $user["permission"] ?></td>
                 <td><?= $user["createdAt"] ?></td>
                 <td><?= $user["updatedAt"] ?></td>
                 <td>
-                  <form action="./editUser.php" method="GET">
+                  <form action="./editUser.php?id=<?= $user["id"] ?>" method="POST">
                     <input type="hidden" name="id" value=<?= $user["id"] ?>>
                     <input class="btn btn-primary" type="submit" value="Editar">
                   </form>
                 </td>
-                <?php
-                  if ($user['role'] != 'admin') {
-                    echo '
-                    <td>
-                    <form action="../controllers/UserController.php" method="POST">
-                      <input type="hidden" name="id" value=' . $user["id"].'>
-                      <input type="hidden" name="type" value="delete">
-                      <input class="btn btn-danger" type="submit" value="Deletar">
-                    </form>
-                    </td>';
-                  }
-                ?>
+                <td>
+                  <form action="../controllers/UserController.php" method="POST">
+                    <input type="hidden" name="id" value=<?= $user["id"] ?>>
+                    <input type="hidden" name="type" value="delete">
+                    <input class="btn btn-danger" type="submit" value="Deletar">
+                  </form>
+                </td>
               </tr>
             <?php }
             ?>
