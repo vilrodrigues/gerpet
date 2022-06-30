@@ -91,7 +91,7 @@ require_once('../dao/ProductDAO.php');
             ?>
               <tr>
                 <th scope="row"><?= $cat["name"] ?></th>
-                <td><?= $i[0]["count(id)"] ?></td>
+                <td><?= $i[0]["sum(amount)"] ?></td>
                 <td>
                   <form action="./editCategory.php" method="GET">
                     <input type="hidden" name="id" value=<?= $cat["id"] ?>>

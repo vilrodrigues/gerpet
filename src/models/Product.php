@@ -6,14 +6,16 @@ class Product {
   private $description;
   private $category;
   private $price;
+  private $amount;
   private $createdAt;
   private $updatedAt;
 
-  function __construct($name, $description, $category, $price) {
+  function __construct($name, $description, $category, $price, $amount=1) {
     $this->name = $name;
     $this->description = $description;
     $this->category = $category;
     $this->price = $price;
+    $this->amount = $amount;
   }
 
   public function setId($id) {
@@ -34,6 +36,10 @@ class Product {
 
   public function setPrice($price) {
     $this->price = $price;
+  }
+  
+  public function setAmount($amount) {
+    $this->price = $amount;
   }
 
   public function setCreatedAt($createdAt) {
@@ -64,6 +70,10 @@ class Product {
     return $this->price;
   }
 
+  public function getAmount() {
+    return $this->amount;
+  }
+
   public function getCreatedAt() {
     return $this->createdAt;
   }
@@ -72,5 +82,3 @@ class Product {
     return $this->updatedAt;
   }
 }
-
-?>

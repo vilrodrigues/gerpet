@@ -6,13 +6,13 @@ require_once('GenericDAO.php');
 class ProductDAO extends GenericDAO {
 
   public function adicionar($product) {
-    $sql = 'INSERT INTO product (name, description, category, price) VALUES(?,?,?,?)';
-    $this->create($sql, Array($product->getName(), $product->getDescription(), $product->getCategory(), $product->getPrice()));
+    $sql = 'INSERT INTO product (name, description, category, price, amount) VALUES(?,?,?,?,?)';
+    $this->create($sql, Array($product->getName(), $product->getDescription(), $product->getCategory(), $product->getPrice(), $product->getAmount()));
   }
 
   public function alterar($product) {
-    $sql = 'UPDATE product SET name=?, description=?, category=?, price=?, updatedAt=now() where id=?';
-    $this->update($sql, Array($product->getName(), $product->getDescription(), $product->getCategory(), $product->getPrice(), $product->getId()));
+    $sql = 'UPDATE product SET name=?, description=?, category=?, price=?, amount=?, updatedAt=now() where id=?';
+    $this->update($sql, Array($product->getName(), $product->getDescription(), $product->getCategory(), $product->getPrice(), $product->getAmount(), $product->getId()));
   }
 
   public function remover($id) {
@@ -26,8 +26,16 @@ class ProductDAO extends GenericDAO {
     return $query;
   }
 
+  public function selecionarPeloId($id) {
+    $sql = 'SELECT * FROM product WHERE id = ?';
+    $query = $this->read($sql, Array($id));
+    return $query;
+  }
+
+  //editar
+
   public function count($category) {
-    $sql = 'SELECT count(id) FROM product WHERE category = ?';
+    $sql = 'SELECT sum(amount) FROM product WHERE category = ?';
     $query = $this->read($sql, Array($category));
     return $query;
   }
