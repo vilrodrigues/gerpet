@@ -22,4 +22,3 @@ if (empty($_SESSION['userName'])) {
 
 </html>
 
-<!--- teste ---!>
