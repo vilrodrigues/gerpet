@@ -8,25 +8,22 @@ if ($_SESSION['userRole'] != 'admin') {
   header('location:../controllers/UserController.php?q=logout');
 }
 
-require_once('../dao/ProductDAO.php');
-require_once('../dao/CategoryDAO.php');
 
-$categoryDao = new CategoryDAO();
-$productDao = new ProductDAO();
+require_once('../dao/ServiceDAO.php');
 
-$cats = $categoryDao->selecionarPeloNome('%');
+$serviceDao = new ServiceDAO();
 
 if (isset($_GET["id"])) {
-  $query = $productDao->selecionarPeloId($_GET["id"]);
-  $product = new Product($query[0]['name'], $query[0]['description'], $query[0]['category'], $query[0]['price'], $query[0]['amount']);
-  $product->setId($_GET["id"]);
+  $query = $serviceDao->selecionarPeloId($_GET["id"]);
+  $service = new Service($query[0]['name'], $query[0]['description'], $query[0]['price']);
+  $service->setId($_GET["id"]);
 }
 
 if (isset($_POST["id"])) {
-  $prod = new Product($_POST["name-new"], $_POST["description-new"], $_POST["category-new"], $_POST["price-new"], $_POST["amount-new"]);
-  $prod->setId($_POST['id']);
-  $productDao->alterar($prod);
-  header('location:products.php');
+  $serv = new Service($_POST["name-new"], $_POST["description-new"], $_POST["price-new"]);
+  $serv->setId($_POST['id']);
+  $serviceDao->alterar($serv);
+  header('location:services.php');
 }
 
 ?>
@@ -54,9 +51,7 @@ if (isset($_POST["id"])) {
             <tr>
               <th scope="col">Nome</th>
               <th scope="col">Description</th>
-              <th scope="col">Categoria</th>
               <th scope="col">Preço</th>
-              <th scope="col">Quantidade</th>
             </tr>
           </thead>
           <tbody>
@@ -64,28 +59,16 @@ if (isset($_POST["id"])) {
             <tr>
               <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
                 <th scope="row">
-                  <input required type="text" name="name-new" value="<?= $product->getName(); ?>">
+                  <input required type="text" name="name-new" value="<?= $service->getName(); ?>">
                 </th>
                 <td>
-                  <input required type="text" name="description-new" value="<?= $product->getDescription(); ?>">
+                  <input required type="text" name="description-new" value="<?= $service->getDescription(); ?>">
                 </td>
                 <td>
-                  <select required name="category-new">
-                    <?php
-                    foreach ($cats as $cat) {
-                      echo '<option value="' . $cat['name'] . '">' . $cat['name'] . '</option>';
-                    }
-                    ?>
-                  </select>
+                  <input required type="number" step=".01" name="price-new" value="<?= $service->getPrice(); ?>">
                 </td>
                 <td>
-                  <input required type="text" name="price-new" value="<?= $product->getPrice(); ?>">
-                </td>
-                <td>
-                  <input required type="text" name="amount-new" value="<?= $product->getAmount(); ?>">
-                </td>
-                <td>
-                  <input type="hidden" name="id" value="<?= $product->getId(); ?>">
+                  <input type="hidden" name="id" value="<?= $service->getId(); ?>">
                   <input class="btn btn-primary" type="submit" value="Editar">
                 </td>
               </form>

@@ -19,6 +19,10 @@ if (empty($_SESSION['userName']))
 
   <?php include_once 'templates/navbar.php'?>
 
+  <div class="container">
+    <h1 class="text-center h1 pt-5 mt-5">Sistema Gerenciador De Pet Shop</h1>
+  </div>
+
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
 </body>
 

@@ -93,22 +93,6 @@ function singup()
   exit();
 }
 
-function delete()
-{
-  $userDao = new UserDAO();
-  $userDao->remover($_POST['id']);
-  redirect('../views/users.php');
-}
-
-function edit()
-{
-  $userDao = new UserDAO();
-  $user = new User($_POST['name'], $_POST['login'], $_POST['password']);
-  $user->setId($_POST['id']);
-  $userDao->alterar($user);
-  redirect('../views/users.php');
-}
-
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
   switch ($_POST['type']) {
@@ -117,12 +101,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       break;
     case 'singup':
       singup();
-      break;
-    case 'delete':
-      delete();
-      break;
-    case 'edit':
-      edit();
       break;
     default:
       redirect('../../index.php');

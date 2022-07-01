@@ -6,25 +6,20 @@ if ($_SESSION['userRole'] != 'admin') {
   header('location:../controllers/UserController.php?q=logout');
 }
 
-require_once('../dao/CategoryDAO.php');
-require_once('../dao/ProductDAO.php');
+require_once('../dao/ServiceDAO.php');
 
-$productDao = new ProductDAO();
-$categoryDao = new CategoryDAO();
-
-$grupo = $productDao->selecionarPeloNome('%');
-$cats = $categoryDao->selecionarPeloNome('%');
-
+$serviceDao = new ServiceDAO();
+$grupo = $serviceDao->selecionarPeloNome('%');
 
 if (isset($_POST['id'])) {
-  $productDao->remover($_POST['id']);
-  header('location:products.php');
+  $serviceDao->remover($_POST['id']);
+  header('location:services.php');
 }
 
 if (isset($_POST['adicionar'])) {
-  $product = new Product($_POST['name'], $_POST['description'], $_POST['category'], $_POST['price'], $_POST['amount']);
-  $productDao->adicionar($product);
-  header('location:products.php');
+  $service = new Service($_POST['name'], $_POST['description'], $_POST['price']);
+  $serviceDao->adicionar($service);
+  header('location:services.php');
 }
 
 ?>
@@ -37,7 +32,7 @@ if (isset($_POST['adicionar'])) {
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-  <title>Produtos | GERPET</title>
+  <title>Serviços | GERPET</title>
 </head>
 
 <body>
@@ -52,7 +47,6 @@ if (isset($_POST['adicionar'])) {
             <tr>
               <th scope="col">Nome</th>
               <th scope="col">Descrição</th>
-              <th scope="col">Categoria</th>
               <th scope="col">Preço</th>
             </tr>
           </thead>
@@ -66,21 +60,8 @@ if (isset($_POST['adicionar'])) {
                 <td>
                   <input required type="text" name="description" value="" placeholder="Descrição">
                 </td>
-                <td><select required name="category">
-                    <?php
-
-                    foreach ($cats as $cat) {
-                      echo '<option value="' . $cat['name'] . '">' . $cat['name'] . '</option>';
-                    }
-
-                    ?>
-                  </select>
-                </td>
                 <td>
                   <input type="number" step=".01" name="price" value="" placeholder="Preço">
-                </td>
-                <td>
-                  <input type="number" name="amount" value="" placeholder="Quantidade">
                 </td>
                 <td>
                   <input type="hidden" name="adicionar" value="adicionar">
@@ -103,30 +84,26 @@ if (isset($_POST['adicionar'])) {
             <tr>
               <th scope="col">Nome</th>
               <td scope="col">Descrição</td>
-              <td scope="col">Categoria</td>
-              <td scope="col">Quantidade de Itens</td>
               <td scope="col">Preço</td>
             </tr>
           </thead>
           <tbody>
             <?php
-            foreach ($grupo as $pro) {
+            foreach ($grupo as $serv) {
             ?>
               <tr>
-                <th scope="row"><?= $pro["name"] ?></th>
-                <td><?= $pro["description"] ?></td>
-                <td><?= $pro["category"] ?></td>
-                <td><?= $pro["amount"] ?></td>
-                <td><?= $pro["price"] ?></td>
+                <th scope="row"><?= $serv["name"] ?></th>
+                <td><?= $serv["description"] ?></td>
+                <td><?= $serv["price"] ?></td>
                 <td>
-                  <form action="./editProduct.php" method="GET">
-                    <input type="hidden" name="id" value=<?= $pro["id"] ?>>
+                  <form action="./editService.php" method="GET">
+                    <input type="hidden" name="id" value=<?= $serv["id"] ?>>
                     <input class="btn btn-primary" type="submit" value="Editar">
                   </form>
                 </td>
                 <td>
                   <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
-                    <input type="hidden" name="id" value=<?= $pro["id"] ?>>
+                    <input type="hidden" name="id" value=<?= $serv["id"] ?>>
                     <input type="hidden" name="type" value="delete">
                     <input class="btn btn-danger" type="submit" value="Deletar">
                   </form>

@@ -1,25 +1,28 @@
 <?php
 
 session_start();
+if (empty($_SESSION['userName']))
+  header('location:login.php');
+if ($_SESSION['userRole'] != 'admin') {
+  header('location:../controllers/UserController.php?q=logout');
+}
+
+require_once('../dao/CategoryDAO.php');
+require_once('../models/User.php');
+
+$categoryDao = new CategoryDAO();
 
 if (isset($_GET["id"])) {
-  require_once '../dao/CategoryDAO.php';
-  $categoryDao = new CategoryDAO();
   $query = $categoryDao->selecionarPeloId($_GET["id"]);
   $cat = new Category($query[0]['name']);
   $cat->setId($_GET["id"]);
 }
 
 if (isset($_POST["id"])) {
-
-  require_once('../dao/CategoryDAO.php');
-  require_once('../models/User.php');
   $categoria = new Category($_POST["name-new"]);
   $categoria->setId($_POST['id']);
-  $categoryDao = new CategoryDAO();
   $categoryDao->alterar($categoria);
   header('location:categories.php');
-  
 }
 
 ?>

@@ -2,24 +2,28 @@
 
 session_start();
 
+if (empty($_SESSION['userName']))
+  header('location:login.php');
+if ($_SESSION['userRole'] != 'admin') {
+  header('location:../controllers/UserController.php?q=logout');
+}
+
+require_once('../dao/UserDAO.php');
+require_once('../models/User.php');
+
+$userDao = new UserDAO();
+
 if (isset($_GET["id"])) {
-  require_once '../dao/UserDAO.php';
-  $userDao = new UserDAO();
   $query = $userDao->selecionarPeloId($_GET["id"]);
   $user = new User($query[0]['name'], $query[0]['login'], $query[0]['password']);
   $user->setId($_GET["id"]);
 }
 
 if (isset($_POST["id"])) {
-
-  require_once('../dao/UserDAO.php');
-  require_once('../models/User.php');
   $usuario = new User($_POST["name-new"], $_POST["login-new"], $_POST["password-new"]);
   $usuario->setId($_POST['id']);
-  $userDao = new UserDAO();
   $userDao->alterar($usuario);
-  header('location:users.php');
-  
+  header('location:users.php');  
 }
 
 ?>

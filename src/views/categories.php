@@ -7,25 +7,22 @@ if ($_SESSION['userRole'] != 'admin') {
 }
 
 require_once('../dao/CategoryDAO.php');
+require_once('../dao/ProductDAO.php');
+
 $categoryDao = new CategoryDAO();
 $grupo = $categoryDao->selecionarPeloNome('%');
 
 
 if (isset($_POST['id'])) {
-  $categoryDao = new CategoryDAO();
   $categoryDao->remover($_POST['id']);
   header('location:categories.php');
 }
 
 if (isset($_POST['adicionar'])) {
-  $categoryDao = new CategoryDAO();
   $category = new Category($_POST['name']);
   $categoryDao->adicionar($category);
   header('location:categories.php');
 }
-
-
-require_once('../dao/ProductDAO.php');
 
 ?>
 

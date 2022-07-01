@@ -9,6 +9,12 @@ if ($_SESSION['userRole'] != 'admin' ) {
 require_once('../dao/UserDAO.php');
 $userDao = new UserDAO();
 $grupo = $userDao->selecionarPeloNome('%');
+
+if (isset($_POST['id'])) {
+  $userDao->remover($_POST['id']);
+  header('location:users.php');
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -57,12 +63,12 @@ $grupo = $userDao->selecionarPeloNome('%');
                   if ($user['role'] != 'admin') {
                     echo '
                     <td>
-                    <form action="../controllers/UserController.php" method="POST">
-                      <input type="hidden" name="id" value=' . $user["id"].'>
+                    <form action="'. $_SERVER['PHP_SELF'] .'" method="POST">
+                      <input type="hidden" name="id" value='.$user["id"].'>
                       <input type="hidden" name="type" value="delete">
                       <input class="btn btn-danger" type="submit" value="Deletar">
                     </form>
-                    </td>';
+                  </td>';
                   }
                 ?>
               </tr>

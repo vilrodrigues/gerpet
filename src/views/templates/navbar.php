@@ -19,6 +19,9 @@
               <a class="nav-link" href="products.php">Produtos</a>
             </li>
             <li class="nav-item">
+              <a class="nav-link" href="services.php">Serviços</a>
+            </li>
+            <li class="nav-item">
               <a class="nav-link" href="store.php">Loja</a>
             </li>
             <li class="nav-item"><a class="nav-link" href="../controllers/UserController.php?q=logout">Sair</a></li>
