@@ -38,8 +38,8 @@ function createUserSession($user)
   $_SESSION['userId'] = $user->getId();
   $_SESSION['userName'] = $user->getName();
   $_SESSION['userLogin'] = $user->getLogin();
-  $_SESSION['userPermission'] = $user->getPermission();
-  redirect('../views/home.php');
+  $_SESSION['userRole'] = $user->getRole();
+  redirect("../../index.php");
   exit();
 }
 
@@ -85,11 +85,11 @@ function singup()
   }
 
   $userDao = new UserDAO();
-  $user = new User($name, $login, $password, 5);
+  $user = new User($name, $login, $password);
   $userDao->adicionar($user);
 
   createUserSession($user);
-  redirect('../views/home.php');
+  redirect("../../index.php");
   exit();
 }
 
@@ -103,7 +103,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       singup();
       break;
     default:
-      redirect('../views/index.php');
+      redirect('../../index.php');
       exit();
   }
 } else {
@@ -113,6 +113,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       logout();
       break;
     default:
-      redirect("../views/index.php");
+      redirect("../../index.php");
   }
 }

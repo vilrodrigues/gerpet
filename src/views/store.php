@@ -1,5 +1,4 @@
 <?php
-
 session_start();
 
 if (empty($_SESSION['userName']))
@@ -9,21 +8,15 @@ if ($_SESSION['userRole'] != 'admin') {
 }
 
 require_once('../dao/UserDAO.php');
-require_once('../models/User.php');
-
 $userDao = new UserDAO();
+$grupo = $userDao->selecionarPeloNome('%');
 
-if (isset($_GET["id"])) {
-  $query = $userDao->selecionarPeloId($_GET["id"]);
-  $user = new User($query[0]['name'], $query[0]['login'], $query[0]['password']);
-  $user->setId($_GET["id"]);
+if ($_GET['type'] == 'product') {
+  header('location:buyProduct.php?id='.$_GET['idUser']);
 }
 
-if (isset($_POST["id"])) {
-  $usuario = new User($_POST["name-new"], $_POST["login-new"], $_POST["password-new"]);
-  $usuario->setId($_POST['id']);
-  $userDao->alterar($usuario);
-  header('location:users.php');  
+if ($_GET['type'] == 'service') {
+  header('location:buyService.php?id='.$_GET['idUser']);
 }
 
 ?>
@@ -36,40 +29,54 @@ if (isset($_POST["id"])) {
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-  <title>Usuários | GERPET</title>
+  <title>Loja | GERPET</title>
 </head>
 
 <body>
 
   <?php include_once 'templates/navbar.php' ?>
 
+  <div class="container">
+    <h1 class="text-center mt-5">Selecione o cliente</h1>
+  </div>
+
   <div class="container mt-5">
     <div class="row justify-content-center">
       <div class="col">
-        <table class="table align-middle">
+        <table class="table">
           <thead>
             <tr>
               <th scope="col">Nome</th>
               <th scope="col">Login</th>
-              <th scope="col">Senha</th>
             </tr>
           </thead>
           <tbody>
-
-            <tr>
-              <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
-                <th scope="row">
-                  <input type="text" name="name-new" value="<?= $user->getName(); ?>">
-                </th>
-                <td><input required type="text" name="login-new" value="<?= $user->getLogin(); ?>"></td>
-                <td><input required type="password" name="password-new" value="" placeholder="********"></td>
+            <?php
+            foreach ($grupo as $user) {
+            ?>
+              <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="GET">
+                <?php if ($user["role"] != "admin") {
+                  echo '
+                <tr>
+                <th scope="row">' . $user["name"] . '</th>
+                <td>' . $user["login"] . '</td>
                 <td>
-                  <input type="hidden" name="id" value="<?= $user->getId(); ?>">
-                  <input class="btn btn-primary" type="submit" value="Editar">
+                  <select required name="type">
+                    <option value="service">Serviço</option>
+                    <option value="product">Produto</option>
+                  </select>
                 </td>
+                <td>
+                  <input type="hidden" name="idUser" value=' . $user["id"] . '>
+                  <input class="btn btn-primary" type="submit" value="Selecionar">
+                </td>
+              </tr>
+                ';
+                }
+                ?>
               </form>
-            </tr>
-
+            <?php }
+            ?>
           </tbody>
         </table>
       </div>

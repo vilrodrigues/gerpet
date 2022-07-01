@@ -29,7 +29,7 @@ CREATE TABLE `category` (
   `updatedAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,7 +38,70 @@ CREATE TABLE `category` (
 
 LOCK TABLES `category` WRITE;
 /*!40000 ALTER TABLE `category` DISABLE KEYS */;
+INSERT INTO `category` VALUES (43,'Brinquedos','2022-06-29 23:34:29','2022-06-30 01:41:15'),(48,'Pets','2022-06-30 01:22:01','2022-07-01 03:01:49'),(49,'Cosméticos','2022-07-01 03:01:22','2022-07-01 03:01:22'),(50,'Acessórios','2022-07-01 05:37:29','2022-07-01 05:37:29');
 /*!40000 ALTER TABLE `category` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `itemProduct`
+--
+
+DROP TABLE IF EXISTS `itemProduct`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `itemProduct` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `idUser` int NOT NULL,
+  `idProduct` int NOT NULL,
+  `amount` int NOT NULL DEFAULT '1',
+  `price` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `idUser` (`idUser`),
+  KEY `idProduct` (`idProduct`),
+  CONSTRAINT `product_ibfk_2` FOREIGN KEY (`idUser`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `product_ibfk_3` FOREIGN KEY (`idProduct`) REFERENCES `product` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb3;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `itemProduct`
+--
+
+LOCK TABLES `itemProduct` WRITE;
+/*!40000 ALTER TABLE `itemProduct` DISABLE KEYS */;
+INSERT INTO `itemProduct` VALUES (19,7,8,1,5),(20,7,8,3,15);
+/*!40000 ALTER TABLE `itemProduct` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `itemService`
+--
+
+DROP TABLE IF EXISTS `itemService`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `itemService` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `idUser` int NOT NULL,
+  `idService` int NOT NULL,
+  `date` varchar(100) NOT NULL,
+  `price` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `idUser` (`idUser`),
+  KEY `idService` (`idService`),
+  CONSTRAINT `product_ibfk_4` FOREIGN KEY (`idUser`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `product_ibfk_5` FOREIGN KEY (`idService`) REFERENCES `service` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `itemService`
+--
+
+LOCK TABLES `itemService` WRITE;
+/*!40000 ALTER TABLE `itemService` DISABLE KEYS */;
+INSERT INTO `itemService` VALUES (1,7,4,'2022-07-15',20),(2,7,5,'2022-07-13',20),(3,7,2,'2022-07-30',35);
+/*!40000 ALTER TABLE `itemService` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -54,12 +117,13 @@ CREATE TABLE `product` (
   `description` varchar(64) NOT NULL,
   `category` varchar(100) NOT NULL,
   `price` int NOT NULL,
+  `amount` int NOT NULL DEFAULT '1',
   `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updatedAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `category` (`category`),
   CONSTRAINT `product_ibfk_1` FOREIGN KEY (`category`) REFERENCES `category` (`name`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -68,7 +132,35 @@ CREATE TABLE `product` (
 
 LOCK TABLES `product` WRITE;
 /*!40000 ALTER TABLE `product` DISABLE KEYS */;
+INSERT INTO `product` VALUES (7,'Corrente','Corrente para cachorros de pequeno porte','Brinquedos',15,13,'2022-07-01 05:43:29','2022-07-01 05:44:38'),(8,'Bolinha','Para cachorros e gatos','Brinquedos',5,16,'2022-07-01 05:43:52','2022-07-01 05:45:39');
 /*!40000 ALTER TABLE `product` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `service`
+--
+
+DROP TABLE IF EXISTS `service`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `service` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `description` varchar(64) NOT NULL,
+  `price` int NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb3;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `service`
+--
+
+LOCK TABLES `service` WRITE;
+/*!40000 ALTER TABLE `service` DISABLE KEYS */;
+INSERT INTO `service` VALUES (2,'Tosa e Banho','A Tosa é importante para manter a higiene.',35),(4,'Banho para cachorros','Banho é importante para a higiene.',20),(5,'Hotel Pet','Deixe seu pet com a gente.',20);
+/*!40000 ALTER TABLE `service` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -83,12 +175,12 @@ CREATE TABLE `user` (
   `name` varchar(100) NOT NULL,
   `login` varchar(64) NOT NULL,
   `password` varchar(100) NOT NULL,
-  `permission` int NOT NULL,
+  `role` varchar(20) NOT NULL,
   `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updatedAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `login` (`login`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -97,6 +189,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
+INSERT INTO `user` VALUES (1,'Administrador','admin','admin','admin','2022-06-29 22:47:37','2022-07-01 03:15:34'),(7,'Cliente 1','cliente1','12345','client','2022-07-01 05:34:36','2022-07-01 05:34:36');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -109,36 +202,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-06-26 14:13:35
-
-// Tabela customer
-
-CREATE TABLE `gerpet`.`customer` 
-( `id` INT NOT NULL AUTO_INCREMENT , 
-`name` VARCHAR(30) NOT NULL , 
-`email` VARCHAR(30) NOT NULL , 
-PRIMARY KEY (`id`)) 
-ENGINE = InnoDB; 
-
-// Tabela animal
-
-CREATE TABLE `gerpet`.`animal` 
-( `id` INT NOT NULL AUTO_INCREMENT , 
-`name` VARCHAR(30) NOT NULL , 
-`nickname` VARCHAR(30) NOT NULL , 
-`owner` INT NOT NULL , 
-PRIMARY KEY (`id`)) 
-FOREIGN KEY (owner) REFERENCES cutomer(id)
-ENGINE = InnoDB; 
-
-ALTER TABLE `animal` 
-ADD CONSTRAINT `owner` 
-FOREIGN KEY ( `owner` ) 
-REFERENCES `customer` ( `id` ) ;
-
-// Insert users
-
-INSERT INTO `user` (`id`, `name`, `login`, `password`, `permission`, `createdAt`, `updatedAt`) VALUES
-(44, 'Administrador', 'admin', 'admin', 1, '2022-06-27 23:00:12', NULL),
-(46, 'Veterinário', 'veterinario', 'veterinario', 2, '2022-06-27 23:02:31', NULL),
-(47, 'Atendente', 'atendente', 'atendente', 3, '2022-06-27 23:02:10', NULL);
+-- Dump completed on 2022-07-01  2:49:59

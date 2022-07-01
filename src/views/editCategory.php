@@ -1,29 +1,28 @@
 <?php
 
 session_start();
-
 if (empty($_SESSION['userName']))
   header('location:login.php');
 if ($_SESSION['userRole'] != 'admin') {
   header('location:../controllers/UserController.php?q=logout');
 }
 
-require_once('../dao/UserDAO.php');
+require_once('../dao/CategoryDAO.php');
 require_once('../models/User.php');
 
-$userDao = new UserDAO();
+$categoryDao = new CategoryDAO();
 
 if (isset($_GET["id"])) {
-  $query = $userDao->selecionarPeloId($_GET["id"]);
-  $user = new User($query[0]['name'], $query[0]['login'], $query[0]['password']);
-  $user->setId($_GET["id"]);
+  $query = $categoryDao->selecionarPeloId($_GET["id"]);
+  $cat = new Category($query[0]['name']);
+  $cat->setId($_GET["id"]);
 }
 
 if (isset($_POST["id"])) {
-  $usuario = new User($_POST["name-new"], $_POST["login-new"], $_POST["password-new"]);
-  $usuario->setId($_POST['id']);
-  $userDao->alterar($usuario);
-  header('location:users.php');  
+  $categoria = new Category($_POST["name-new"]);
+  $categoria->setId($_POST['id']);
+  $categoryDao->alterar($categoria);
+  header('location:categories.php');
 }
 
 ?>
@@ -36,7 +35,7 @@ if (isset($_POST["id"])) {
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-  <title>Usuários | GERPET</title>
+  <title>Categorias | GERPET</title>
 </head>
 
 <body>
@@ -50,8 +49,6 @@ if (isset($_POST["id"])) {
           <thead>
             <tr>
               <th scope="col">Nome</th>
-              <th scope="col">Login</th>
-              <th scope="col">Senha</th>
             </tr>
           </thead>
           <tbody>
@@ -59,12 +56,10 @@ if (isset($_POST["id"])) {
             <tr>
               <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
                 <th scope="row">
-                  <input type="text" name="name-new" value="<?= $user->getName(); ?>">
+                  <input type="text" name="name-new" value="<?= $cat->getName(); ?>">
                 </th>
-                <td><input required type="text" name="login-new" value="<?= $user->getLogin(); ?>"></td>
-                <td><input required type="password" name="password-new" value="" placeholder="********"></td>
                 <td>
-                  <input type="hidden" name="id" value="<?= $user->getId(); ?>">
+                  <input type="hidden" name="id" value="<?= $cat->getId(); ?>">
                   <input class="btn btn-primary" type="submit" value="Editar">
                 </td>
               </form>
